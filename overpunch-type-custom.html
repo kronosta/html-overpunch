@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .mono {
+                font-family:'Courier New', Courier, monospace;
+                font-size:12pt;
+            }
+        </style>
+        <script src="overpunch-element.js"></script>
+        <script>
+            function typeOverpunch()
+            {
+                let text = document.getElementById("typing").value.replace(/\n/g, "\n\n");
+                if (text.length % 2 == 1) return;
+                totalHTML = "";
+                for (let i = 0; i < text.length; i += 2)
+                {
+                    if (text[i] == '\n')
+                    {
+                        totalHTML += '<br/>';
+                    }
+                    else
+                    {
+                        totalHTML += '<over-punch chars="' + text[i] + text[i + 1] + '" fontclass="mono" spacecount="1"></over-punch>';
+                    }
+                }
+                document.getElementById("overpunch-text").innerHTML = totalHTML;
+            }
+        </script>
+    </head>
+    <body>
+        <textarea id="typing" style="width:300px;height:300px;" oninput="typeOverpunch();"></textarea>
+        <div id="overpunch-text" class="mono"></div>
+    </body>
+</html>

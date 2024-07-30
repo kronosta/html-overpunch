@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="overpunch-element.js"></script>
+    <style>
+        .cpre {
+            font-family: monospace;
+            font-size: 12pt;
+        }
+
+        .serif {
+            font-family: serif;
+            font-size: 20pt;
+        }
+    </style>
+</head>
+<body>
+    <pre>Overpunches are cool.
+For example:
+<over-punch chars='"/' fontclass="cpre" spacecount="1"></over-punch>I love Mondays!<over-punch chars='"/' fontclass="cpre" spacecount="1"></over-punch>, said no one ever.
+You can also get cool little emoticons, like <over-punch chars='"-' fontclass="cpre" spacecount="1"></over-punch>.
+Or not equal: <over-punch chars="/=" fontclass="cpre" spacecount="1"></over-punch>.
+    </pre>
+    <p>This also works in serif,&nbsp;
+        <over-punch chars="@!" fontclass="serif" spacecount="3"></over-punch>
+        <over-punch chars="_*" fontclass="serif" spacecount="1"></over-punch>
+        <over-punch chars="B^" fontclass="serif" spacecount="3"></over-punch>
+        <br/>
+        More than two characters, =]) -> <over-punch chars="=])" fontclass="serif" spacecount="3"></over-punch><br/>
+        Styled overpunches: <over-punch chars="^?" fontclass="serif" spacecount="2" style="color:red"></over-punch><br/>
+        <span style="font-size:35pt;">Bigger text: <over-punch chars="K+" fontclass="serif" spacecount="2"></over-punch></span>
+    </p>
+    
+</body>
+</html>

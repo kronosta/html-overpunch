@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .textDimensionCalculation {
+                position: absolute;
+                visibility: hidden;
+                height: auto;
+                width: auto;
+                white-space: nowrap;
+            }
+
+            .font-data {
+                font-family:sans-serif;
+                font-size:12pt;
+            }
+        </style>
+        <script>
+            const knownWidths = {};
+
+            function calculateWordDimensions(text, classes) {
+                classes = classes || [];
+
+                classes.push('textDimensionCalculation');
+
+                var div = document.createElement('div');
+                div.setAttribute('class', classes.join(' '));
+                div.setAttribute('id', 'word-dimension-calc');
+
+                div.innerHTML = text.replace("<", "&lt;").replace("<", "&gt;");
+
+                document.body.appendChild(div);
+
+                var dimensions = {
+                    width : div.offsetWidth,
+                    height : div.offsetHeight
+                }
+
+                div.parentNode.removeChild(div);
+
+                return dimensions;
+            };
+
+            function typeOverpunch()
+            {
+                let text = document.getElementById("typing").value;
+                let totalHTML = "";
+                let totalPixels = 0;
+                let style = document.getElementById("overpunch-text").style;
+                let knownWidthsElem;
+                
+                for (let i = 0; i < text.length; i += 2)
+                {
+                    if (text[i] == '\n')
+                    {
+                        totalPixels = 0;
+                        totalHTML += '<br/>';
+                    }
+                    else if (text[i] == ' ')
+                    {
+                        totalPixels += calculateWordDimensions('E E', ["font-data"]).width - calculateWordDimensions('EE', ["font-data"]).width;
+                    }
+                    else if ((knownWidthsElem = knownWidths[text[i] + text[i + 1]]) !== undefined)
+                    {
+                        totalHTML += '<span style="position:absolute;left:' + totalPixels + 'px;">' + text[i] + '</span>';
+                        totalHTML += '<span style="position:absolute;left:' + totalPixels + 'px;">' + text[i + 1] + '</span>';
+                        totalPixels += knownWidthsElem;
+                    }
+                    else
+                    {
+                        if (text[i + 1] !== undefined)
+                        {
+                            totalHTML += '<span style="position:absolute;left:' + totalPixels + 'px;">' + text[i] + '</span>';
+                            totalHTML += '<span style="position:absolute;left:' + totalPixels + 'px;">' + text[i + 1] + '</span>';
+                            let char1Width = calculateWordDimensions(text[i], ["font-data"]).width;
+                            let char2Width = calculateWordDimensions(text[i + 1], ["font-data"]).width;
+                            let maxWidth = Math.max(char1Width, char2Width);
+                            totalPixels += maxWidth;
+                            knownWidths[text[i] + text[i + 1]] = maxWidth;
+                        }
+                    }
+                }
+                document.getElementById("overpunch-text").innerHTML = totalHTML;
+            }
+        </script>
+    </head>
+    <body>
+        <textarea id="typing" style="width:300px;height:300px;" oninput="typeOverpunch();"></textarea>
+        <br/>
+        <span id="overpunch-text" class="font-data"></span>
+    </body>
+</html>

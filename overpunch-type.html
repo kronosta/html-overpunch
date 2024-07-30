@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            function typeOverpunch()
+            {
+                let text = document.getElementById("typing").value;
+                let totalHTML = "";
+                let totalPixels = 36;
+                
+                for (let i = 0; i < text.length; i += 2)
+                {
+                    if (text[i] == '\n')
+                    {
+                        totalPixels = 36;
+                        totalHTML += '<br/>';
+                    }
+                    else
+                    {
+                        if (text[i + 1] !== undefined)
+                        {
+                            totalHTML += '<span style="position:absolute;left:' + totalPixels + ';">' + text[i] + '</span>';
+                            totalHTML += '<span style="position:relative;left:0px;">' + text[i + 1] + '</span>';
+                            totalPixels += 36;
+                        }
+                    }
+                }
+                document.getElementById("overpunch-text").innerHTML = totalHTML;
+            }
+        </script>
+    </head>
+    <body>
+        <textarea id="typing" style="width:300px;height:300px;" oninput="typeOverpunch();"></textarea>
+        <div id="overpunch-text" style="font-family:monospace;font-size:36px;"></div>
+    </body>
+</html>

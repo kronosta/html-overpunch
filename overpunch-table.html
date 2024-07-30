@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            function createTable() {
+                //alert("Creating table!");
+                document.getElementById("over").innerHTML = "";
+                let overlapEntry = '<td><p style="font-family:monospace;font-size:64px;">@1<span style="position:relative;left:-35px;">@2</span></p></td>'
+                let innerHTML = document.getElementById("over").innerHTML;
+                let afrom = Number(document.getElementById("a-from").value);
+                let ato = Number(document.getElementById("a-to").value);
+                let bfrom = Number(document.getElementById("b-from").value);
+                let bto = Number(document.getElementById("b-to").value);
+
+                for (let i = afrom; i <= ato; i++)
+                {
+                    innerHTML += "<tr>";
+                    for (let j = bfrom; j <= bto; j++)
+                    {
+                        innerHTML += overlapEntry
+                            .replace("@1", String.fromCharCode(i))
+                            .replace("@2", String.fromCharCode(j));
+                    }
+                    innerHTML += "</tr>";
+                }
+
+                document.getElementById("over").innerHTML = innerHTML;
+            }
+        </script>
+    </head>
+    <body>
+        <form>
+            <label>Use unicode character codes in decimal, or hexadecimal with 0x[Digits].</label>
+            <br/>
+            <label for="a-from">First goes from</label>
+            <input type="text" id="a-from" name="a-from" style="width:50px" value="33"/>
+            <label for="a-to">to</label>
+            <input type="text" id="a-to" name="a-to" style="width:50px" value="126"/>
+            <br/>
+            <label for="b-from">Second goes from</label>
+            <input type="text" id="b-from" name="b-from" style="width:50px" value="33"/>
+            <label for="b-to">to</label>
+            <input type="text" id="b-to" name="b-to" style="width:50px" value="126"/>
+        </form>
+        <button onclick="createTable();">Create table</button>
+        <table id="over">
+        </table>
+    </body>
+</html>
